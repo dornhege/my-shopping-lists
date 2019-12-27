@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}{{list_title}}{% endblock %}
+{% block intitle %}: {{list_title}}{% endblock %}
+{% block head %}
+    {{ super () }}
+    <script type="text/javascript" src="/static/grocery-list.js"></script>
+    <style type="text/css">
+        .display_shop {
+            display: {{display_shop}};
+        }
+        .display_list {
+            display: {{display_list}};
+        }
+    </style>
+{% endblock %}
+
+{% block nav_right %}
+<ul>
+    <li>
+        <label class="checkbox">
+        <input id="display_shop_check" type="checkbox" name="display_shops"
+            {% if display_shop != "none" %}
+            checked="checked"
+            {% endif %}
+            onClick="display_toggle('display_shop');"/> Display Shops
+        </label>
+    </li>
+    <li>
+        <label class="checkbox">
+        <input id="display_list_check" type="checkbox" name="display_list"
+            {% if display_list != "none" %}
+            checked="checked"
+            {% endif %}
+            onClick="display_toggle('display_list');"/> Display List Name
+        </label>
+    </li>
+    <br/>
+    <li>
+        <a id="save_shopped" href="#" onClick="save_shopped();">Save Shopped</a>
+    </li>
+    {% if add_edit_link %}
+    <li>
+        <a href="/manage_lists/edit_list?list_name={{list_title}}">Edit List</a>
+    </li>
+    {% endif %}
+    {% if add_edit_config_link %}
+    <li>
+        <a href="/shopping/custom/edit_config?config_name={{list_title}}">Edit Config</a>
+    </li>
+    {% endif %}
+
+</ul>
+{% endblock %}
+
+{% block content %}
+        <ul id="toshop" class="shopping_list">
+        {% for item in list_items %}
+            {% if not item.shopped %}
+                <li id="Key{{item.key.urlsafe()}}">
+                {% if item.count > 1 %}
+                    {{item.count}}x 
+                {% endif %}
+                {{item.item_name}}
+                {% if item.shop %}
+                <span class="display_shop">({{item.shop}})</span>
+                {% endif %}
+                {% if item.list_name %}
+                <span class="display_list">({{item.list_name}})</span>
+                {% endif %}
+                </li> 
+            {% endif %}
+        {% endfor %}
+        </ul>
+        <hr>
+        <ul id="shopped" class="shopping_list">
+        {% for item in list_items %}
+            {% if item.shopped %}
+                <li id="Key{{item.key.urlsafe()}}">
+                {% if item.count > 1 %}
+                    {{item.count}}x 
+                {% endif %}
+                {{item.item_name}}
+                {% if item.shop %}
+                <span class="display_shop">({{item.shop}})</span>
+                {% endif %}
+                {% if item.list_name %}
+                <span class="display_list">({{item.list_name}})</span>
+                {% endif %}
+                </li> 
+            {% endif %}
+        {% endfor %}
+        </ul>
+{% endblock %}
+

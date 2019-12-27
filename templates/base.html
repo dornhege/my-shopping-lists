@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <title>Shopping Lists - {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="/static/grocery-list.css" />
+        {% endblock %}
+    </head>
+
+    <body onload="javascript:init()">
+        <div class="login_header">
+            {% if user %}
+            <ul>
+                <li>Hello, {{ user.nickname() }}!</li>
+                <li><a href="{{ logout_url }}">Logout</a></li>
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="nav_right">
+        {% block nav_right %}
+        {% endblock %}
+        </div>
+
+        <div class="wrapper">
+
+        <h1><a href="/">Shopping Lists{% block intitle %}{% endblock %}</a></h1>
+        <hr>
+
+        {% block content %}
+        {% endblock %}
+
+        </div>
+
+    </body>
+</html>
+

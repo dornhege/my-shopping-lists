@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+<!-- New/Edit param -->
+{% block title %}Edit List{% endblock %}
+{% block intitle %}: Edit List{% endblock %}
+{% block head %}
+    {{ super () }}
+    <script type="text/javascript">
+        function confirmDelete()
+        {
+            var r = confirm("Delete the list {{list_name}} and all content?");
+            if (r == true) {
+                  document.forms['delete_list'].submit()
+            }
+        }
+    </script>
+{% endblock %}
+{% block content %}
+        {% if list_name %}
+        <form method="post" action="/manage_lists/delete_list" name="delete_list" style="display: none;">
+            <input type="text" name="list_name" value="{{list_name}}">
+        </form>
+        <a class="delete" href="#" onClick="confirmDelete(); return false">delete list</a>
+        {% endif %}
+
+        <form method="post" action="/manage_lists/edit_list">
+            <label>
+                <div>Name</div>
+                {% if list_name %}
+                <input type="text" name="list_name" value="{{list_name}}">
+                {% else %}
+                <input type="text" name="list_name" value="">
+                {% endif %}
+            </label>
+            <div style="color: red">{{name_error}}</div>
+            <label>
+                <div>Shopping List:</div>
+                <textarea name="shoppinglist" style="width: 960px, height: 200">{{list_content}}</textarea>
+            </label>
+            <br />
+            <div style="color: red">{{content_error}}</div>
+            <input type="submit" name="save" value="Save">
+            <input type="submit" name="save_and_shopping" value="Save and Go Shopping"
+                style="float: right; margin-right:30px;">
+        </form>
+{% endblock %}
+

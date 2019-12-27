@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Main{% endblock %}
+{% block intitle %}{% endblock %}
+
+{% block nav_right %}
+<ul>
+    <li>
+        <a href="/settings">Settings</a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+   {% if user %}
+        <ul>
+            <li>Go Shopping
+                <ul>
+                    <li><a href="/shopping/by_shop">By Shop (All Lists)</a></li>
+                    <ul>
+                        {% for shop in shops %}
+                            {% if shop %}
+                            <li><a href="/shopping/by_shop/{{shop}}">{{shop}}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                    <li><a href="/shopping/by_list">By List (All Shops)</a></li>
+                    <ul>
+                        {% for list in lists %}
+                        <li><a href="/shopping/by_list/{{list.list_name}}">{{list.list_name}}</a></li>
+                        {% endfor %}
+                    </ul>
+
+                    <li><a href="/shopping/custom">Custom</a></li>
+                    <ul>
+                        {% for config in configs %}
+                        <li><a href="/shopping/custom/view/{{config.name}}">{{config.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </ul>
+            </li>
+            <li><a href="/manage_lists">Manage Lists</a></li>
+            <ul>
+                <li><a href="/manage_lists/edit_list">New List</a></li>
+                {% for list in lists %}
+                <li><a href="/manage_lists/edit_list?list_name={{list.list_name}}">{{list.list_name}}</a></li>
+                {% endfor %}
+            </ul>
+        </ul>
+   {% endif %}
+
+{% endblock %}
+

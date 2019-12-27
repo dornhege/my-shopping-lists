@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Shop Custom{% endblock %}
+{% block intitle %}: Shop - Custom{% endblock %}
+{% block content %}
+    <h2>Shopping</h2>
+    <ul>
+        <li><a href="/shopping/custom/edit_config">New Config</a></li>
+        {% for config in configs %}
+        <li><a href="/shopping/custom/view/{{config.name}}">{{config.name}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+

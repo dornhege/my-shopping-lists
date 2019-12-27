@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Default Settings{% endblock %}
+{% block intitle %}: Default Settings{% endblock %}
+{% block content %}
+    <form method="post" action="/settings">
+    <h2>Shop By Shop</h2>
+    <ul style="list-style-type: none">
+        <li>
+            <label class="checkbox">
+            <input type="checkbox" name="display_by_shop_shops"
+                {% if settings and settings.display_by_shop_shops %}
+                checked="checked"
+                {% endif %}
+                /> Display Shops
+            </label>
+        </li>
+        <li>
+            <label class="checkbox">
+            <input type="checkbox" name="display_by_shop_list_name"
+                {% if not settings or settings.display_by_shop_list_name %}
+                checked="checked"
+                {% endif %}
+                /> Display List Name
+            </label>
+        </li>
+    </ul>
+
+    <h2>Shop By List</h2>
+    <ul style="list-style-type: none">
+        <li>
+            <label class="checkbox">
+            <input type="checkbox" name="display_by_list_shops"
+                {% if not settings or settings.display_by_list_shops %}
+                checked="checked"
+                {% endif %}
+                /> Display Shops
+            </label>
+        </li>
+        <li>
+            <label class="checkbox">
+            <input type="checkbox" name="display_by_list_list_name"
+                {% if settings and settings.display_by_list_list_name %}
+                checked="checked"
+                {% endif %}
+                /> Display List Name
+            </label>
+        </li>
+    </ul>
+
+    <h2>Shop Custom</h2>
+    <ul style="list-style-type: none">
+        <li>
+            <label class="checkbox">
+            <input type="checkbox" name="display_custom_shops"
+                {% if not settings or settings.display_custom_shops %}
+                checked="checked"
+                {% endif %}
+                /> Display Shops
+            </label>
+        </li>
+        <li>
+            <label class="checkbox">
+            <input type="checkbox" name="display_custom_list_name"
+                {% if settings and settings.display_custom_list_name %}
+                checked="checked"
+                {% endif %}
+                /> Display List Name
+            </label>
+        </li>
+    </ul>
+
+    <input type="submit" value="Save" />
+    </form>
+
+{% endblock %}
+

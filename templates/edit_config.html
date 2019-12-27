@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+<!-- New/Edit param -->
+{% block title %}Edit Shopping Config{% endblock %}
+{% block intitle %}: Edit Shopping Config{% endblock %}
+{% block head %}
+    {{ super () }}
+    <script type="text/javascript" src="/static/grocery-list.js"></script>
+    <script type="text/javascript">
+        function confirmDeleteConfig()
+        {
+            var r = confirm("Delete the config {{config_name}} and all content?");
+            if (r == true) {
+                  document.forms['delete_config'].submit()
+            }
+        }
+    </script>
+    <style type="text/css">
+        #shopped li {
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+        {% if config_name %}
+        <form method="post" action="/shopping/custom/delete_config" name="delete_config" style="display: none;">
+            <input type="text" name="config_name" value="{{config_name}}">
+        </form>
+        <a class="delete" href="#" onClick="confirmDeleteConfig(); return false">delete config</a>
+        {% endif %}
+
+        <form name="edit_config" method="post" action="/shopping/custom/edit_config">
+            <label>
+                <div>Name</div>
+                {% if config_name %}
+                <input type="text" name="config_name" value="{{config_name}}">
+                {% else %}
+                <input type="text" name="config_name" value="">
+                {% endif %}
+            </label>
+            <div style="color: red">{{name_error}}</div>
+
+            <input type="hidden" name="selected_configs" />
+            <div style="overflow: auto;">
+                <div style="float:left">
+                Configs<br/>
+                <ul id="toshop" class="shopping_list" style="float:left">
+                {% for cp in available_config_pairs %}
+                <li title="{{cp.list_name}}$$${{cp.shop}}">
+                    {{cp.list_name}} 
+                    {% if cp.shop %}
+                    ({{cp.shop}})
+                    {% endif %}
+                    </li> 
+                {% endfor %}
+                </ul>
+                </div>
+
+                <div style="float:right">
+                Selected<br/>
+                <ul id="shopped" class="shopping_list" style="float:right">
+                {% for cp in selected_config_pairs %}
+                    <li title="{{cp.list_name}}$$${{cp.shop}}">
+                    {{cp.list_name}} 
+                    {% if cp.shop %}
+                    ({{cp.shop}})
+                    {% endif %}
+                    </li> 
+                {% endfor %}
+                </ul>
+                </div>
+            </div>
+
+            <div style="color: red">{{content_error}}</div>
+            <div>
+                <input type="submit" name="save" value="Save" onClick="save_shopping_config();">
+                <input type="submit" name="save_and_shopping" value="Save and Go Shopping"
+                    style="float: right; margin-right:30px;"
+                    onClick="save_shopping_config();" >
+            </div>
+        </form>
+{% endblock %}
+

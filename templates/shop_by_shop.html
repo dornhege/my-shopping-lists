@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Shop By Shop{% endblock %}
+{% block intitle %}: Shop By Shop{% endblock %}
+{% block content %}
+    <h2>My Shops</h2>
+    <ul>
+        {% for shop in shops %}
+            {% if shop %}
+            <li><a href="/shopping/by_shop/{{shop}}">{{shop}}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}
+

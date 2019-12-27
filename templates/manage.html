@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Manage Lists{% endblock %}
+{% block intitle %}: Manage Lists{% endblock %}
+{% block content %}
+    <h2>My Shopping Lists</h2>
+    <ul>
+        <li><a href="/manage_lists/edit_list">New List</a></li>
+        {% for list in lists %}
+        <li><a href="/manage_lists/edit_list?list_name={{list.list_name}}">{{list.list_name}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
